@@ -1,4 +1,2 @@
 # testRepo
 
-t
-w
