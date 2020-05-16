@@ -22,6 +22,6 @@ jobs:
         ado-token: "${{ secrets.ADO_SECRET }}"
         org-name: leantk
         label-filter: "Area: ABTT"
-        labels-for-issues: "Area: ABTT, P1"
+        labels-for-issues: "P1"
         issue-prefix: "[DTS"
         work-item-status: Active 
