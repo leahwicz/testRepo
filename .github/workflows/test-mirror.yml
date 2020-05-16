@@ -24,3 +24,4 @@ jobs:
         label-filter: "Area: ABTT"
         labels-for-issues: "Area: ABTT, P1"
         issue-prefix: "[DTS"
+        work-item-status: Active 
