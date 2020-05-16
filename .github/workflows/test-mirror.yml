@@ -18,7 +18,7 @@ jobs:
       uses: leahwicz/mirror-devops-workitems-action@master
       with:
         area-path: /DevOps/Pipelines/Integrations
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        repo-token: "${{ secrets.GH_TOKEN }}"
         ado-token: "${{ secrets.ADO_TOKEN }}"
         org-name: leantk
         label-filter: "Area: ABTT"
