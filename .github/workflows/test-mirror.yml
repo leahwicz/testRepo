@@ -23,5 +23,4 @@ jobs:
         org-name: leantk
         label-filter: "Area: ABTT"
         labels-for-issues: "Area: ABTT, P1"
-        work-item-type: bug
         issue-prefix: "[DTS"
