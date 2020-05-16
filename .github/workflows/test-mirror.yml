@@ -18,3 +18,10 @@ jobs:
       uses: leahwicz/mirror-devops-workitems-action@master
       with:
         area-path: /DevOps/Pipelines/Integrations
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        ado-token: "${{ secrets.ADO_TOKEN }}"
+        org-name: leantk
+        label-filter: "Area: ABTT"
+        labels-for-issues: "Area: ABTT, P1"
+        work-item-type: bug
+        issue-prefix: "[DTS"
