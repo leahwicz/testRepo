@@ -25,11 +25,12 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            const {owner, repo} = context.issue
             github.issues.update({ 
-              context.repo.owner, 
-              context.repo.repo, 
+              owner, 
+              repo, 
               8, 
-              "new way" 
+              title: "new way" 
             });
 
       # Runs a set of commands using the runners shell
