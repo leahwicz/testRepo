@@ -27,9 +27,9 @@ jobs:
           script: |
             const {owner, repo} = context.issue
             github.issues.update({ 
-              owner, 
-              repo, 
-              8, 
+              owner: owner, 
+              repo: repo, 
+              issue_number: 8, 
               title: "new way" 
             });
 
