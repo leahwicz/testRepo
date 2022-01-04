@@ -8,50 +8,50 @@
 # **when?**
 # On issue creation or when an issue is labeled `Jira`
 
-name: Jira Issue Creation
+name: Jira Label Mirroring
 
 on:
   issues:
     types: [labeled, unlabeled]
     
 permissions:
-  issues: write
+  issues: read
 
 jobs:
-  create-issue:
+  add-label:
     runs-on: ubuntu-latest
-    outputs:
-      id: ${{ steps.save-id.outputs.id }}
-    steps: 
-      - name: Save Issue ID
-        id: save-id
-        run: |
-          ID='${{ github.repository }}'
-          echo ::set-output name=id::${ID}
-          
-  find-labels:
-    runs-on: ubuntu-latest
-    needs:
-      - create-issue
-    outputs:
-      labels: ${{ steps.generate-labels.outputs.labels }}
+    if: |
+      (github.event.action == 'labeled' && startsWith(github.event.issue.title, '[CT-'))
     steps:
-      - name: Generate Labels
-        id: generate-labels
+      - name: Extract issue from title
+        id: extract
+        env:
+          TITLE: "${{ github.event.issue.title }}"
         run: |
-          LABELS='${{ toJSON(github.event.issue.labels.*.name) }}'
-          echo ::set-output name=labels::${LABELS}
+          jira=$(echo -n $TITLE | awk '{print $1}' | awk -F'[][]' '{print $2}')
+          echo ::set-output name=jira::$jira
           
-  add-labels:
+      - name: Setup Jira
+        uses: atlassian/gajira-cli@v2.0.2
+
+      - name: Add label
+        run: jira labels add ${{ needs.create-issue.outputs.issueId }} ""${{ github.event.label.name }}""
+
+  remove-label:
     runs-on: ubuntu-latest
-    needs:
-      - find-labels
-      - create-issue
-    strategy:
-      matrix:
-        label: ${{ fromJSON(needs.find-labels.outputs.labels) }}
+    if: |
+      (github.event.action == 'unlabeled' && startsWith(github.event.issue.title, '[CT-'))
     steps:
+      - name: Extract issue from title
+        id: extract
+        env:
+          TITLE: "${{ github.event.issue.title }}"
+        run: |
+          jira=$(echo -n $TITLE | awk '{print $1}' | awk -F'[][]' '{print $2}')
+          echo ::set-output name=jira::$jira
+          
+      - name: Setup Jira
+        uses: atlassian/gajira-cli@v2.0.2
 
-      - name: Make comment on Jira issue
-        run: echo ${{ needs.create-issue.outputs.id }} "${{ matrix.label }}"
-
+      - name: Remove label
+        run: jira labels remove ${{ needs.create-issue.outputs.issueId }} ""${{ github.event.label.name }}""
