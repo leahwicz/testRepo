@@ -25,6 +25,6 @@ jobs:
     steps: 
     - name: Script
       run: |
-        labels="${{ toJSON(github.event.issue.labels.*.name) | tr -d '\n'}}"
+        labels="${{ github.event.issue.labels.*.name }}"
 
     
