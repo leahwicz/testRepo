@@ -18,8 +18,21 @@ permissions:
   issues: write
 
 jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    outputs:
+      issueId: ${{ steps.save-id.outputs.issueId }}
+    steps: 
+      - name: Save Issue ID
+        id: save-id
+        run: |
+          ID='${{ github.repository }}'
+          echo ::set-output name=issueId::${ID}
+          
   find-labels:
     runs-on: ubuntu-latest
+    needs:
+      - create-issue
     outputs:
       labels: ${{ steps.generate-labels.outputs.labels }}
     steps:
@@ -28,23 +41,16 @@ jobs:
         run: |
           LABELS='${{ toJSON(github.event.issue.labels.*.name) }}'
           echo ::set-output name=labels::${LABELS}
-
-  my_echo:
-    runs-on: ubuntu-latest
-    needs:
-      - find-labels
-    steps:
-      - name: Echo previous outputs
-        run: echo "${{ toJSON(needs.find-labels.outputs.labels ) }}"
-        
+          
   add-labels:
     runs-on: ubuntu-latest
     needs:
       - find-labels
-      - my_echo
     strategy:
       matrix:
         label: ${{ fromJSON(needs.find-labels.outputs.labels) }}
-    steps: 
-       - name: Make comment on Jira issue
-         run: echo ${{ matrix.label }}
+    steps:
+
+      - name: Make comment on Jira issue
+        run: echo ${{ needs.create-issue.outputs.issueId }} "${{ matrix.label }}"
+
