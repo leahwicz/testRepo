@@ -1,55 +1,29 @@
-# This is a basic workflow to help you get started with Actions
+# **what?**
+# Mirrors issues into Jira. Includes the information: title
+# description, GitHub Issue ID and URL
 
-name: CI2
+# **why?**
+# Jira is our tool for tracking and we need to see these issues in there
 
-# Controls when the workflow will run
+# **when?**
+# On issue creation or when an issue is labeled `Jira`
+
+name: Jira Issue Creation
+
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   issues:
-    types: [opened, labeled]
+    types: [labeled, unlabeled]
+    
+permissions:
+  issues: write
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  create-issue:
     runs-on: ubuntu-latest
-
-    permissions:
-      issues: write 
-    steps:
-      - name: Create issue using REST API
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const {owner, repo} = context.issue
-            github.issues.update({ 
-              owner: owner, 
-              repo: repo, 
-              issue_number: 8, 
-              title: "new way" 
-            });
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          
-
-  post-failure:
-    runs-on: ubuntu-latest
-    needs: build 
-    if: ${{ failure() }}
-
-    steps:
-      - name: Posting scheduled run failures
-        uses: ravsamhq/notify-slack-action@v1
-        with:
-          notification_title: 'Redshift nightly integration test failed'
-          status: ${{ job.status }}
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEV_CORE_ALERTS }}
+    if: |
+      (github.event.action == 'labeled' && github.event.label.name != 'jira'))
+    steps: 
+    - name: Script
+      run: |
+        echo ${{github.event.label.name}}
+    
