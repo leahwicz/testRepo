@@ -35,4 +35,4 @@ jobs:
       - say_hello
     steps:
       - name: Echo previous outputs
-        run: echo '${{ { "labels": toJSON(needs.say_hello.outputs) , "customfield_10045": "github.event.issue.html_url", "customfield_10046": github.event.issue.number } }}'
+        run: echo '${{ toJSON(needs.say_hello.outputs.labels) }}'
