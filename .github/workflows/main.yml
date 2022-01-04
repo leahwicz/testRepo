@@ -35,4 +35,4 @@ jobs:
       - say_hello
     steps:
       - name: Echo previous outputs
-        run: echo '${{ toJSON(needs.say_hello.outputs.labels) }}'
+        run: echo '${{ toJSON(needs.say_hello.outputs.services) }}'
