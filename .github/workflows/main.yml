@@ -25,6 +25,7 @@ jobs:
     steps: 
     - name: Script
       run: |
+        echo "${{ github.event.issue.assignee.login }}"
         labels="${{ github.event.issue.labels.*.name }}"
         labels+="redshift"
         echo "$labels"
