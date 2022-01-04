@@ -26,5 +26,5 @@ jobs:
     - name: Script
       run: |
         labels="${{ toJSON(github.event.issue.labels.*.name) }}"
-        echo "$labels"
+
     
