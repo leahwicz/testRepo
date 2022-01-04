@@ -28,11 +28,20 @@ jobs:
         run: |
           LABELS='${{ toJSON(github.event.issue.labels.*.name) }}'
           echo ::set-output name=services::${LABELS}
-          
+
+  my_echo:
+    runs-on: ubuntu-latest
+    needs:
+      - find-labels
+    steps:
+      - name: Echo previous outputs
+        run: echo "${{ toJSON(needs.find-labels.outputs.labels ) }}"
+        
   add-labels:
     runs-on: ubuntu-latest
     needs:
       - find-labels
+      - my_echo
     strategy:
       matrix:
         label: ${{ fromJSON(needs.find-labels.outputs.labels) }}
