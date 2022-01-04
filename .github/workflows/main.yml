@@ -46,6 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - find-labels
+      - create-issue
     strategy:
       matrix:
         label: ${{ fromJSON(needs.find-labels.outputs.labels) }}
