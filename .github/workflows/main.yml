@@ -35,7 +35,7 @@ jobs:
         uses: atlassian/gajira-cli@v2.0.2
 
       - name: Add label
-        run: jira labels add ${{ needs.create-issue.outputs.issueId }} ""${{ github.event.label.name }}""
+        run: jira labels add ${{ needs.create-issue.outputs.issueId }} ${{ steps.extract.outputs.jira }}
 
   remove-label:
     runs-on: ubuntu-latest
@@ -54,4 +54,4 @@ jobs:
         uses: atlassian/gajira-cli@v2.0.2
 
       - name: Remove label
-        run: jira labels remove ${{ needs.create-issue.outputs.issueId }} ""${{ github.event.label.name }}""
+        run: jira labels remove ${{ needs.create-issue.outputs.issueId }} ${{ steps.extract.outputs.jira }}
