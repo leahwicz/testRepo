@@ -21,13 +21,13 @@ jobs:
   create-issue:
     runs-on: ubuntu-latest
     outputs:
-      issueId: ${{ steps.save-id.outputs.issueId }}
+      id: ${{ steps.save-id.outputs.id }}
     steps: 
       - name: Save Issue ID
         id: save-id
         run: |
           ID='${{ github.repository }}'
-          echo ::set-output name=issueId::${ID}
+          echo ::set-output name=id::${ID}
           
   find-labels:
     runs-on: ubuntu-latest
@@ -52,5 +52,5 @@ jobs:
     steps:
 
       - name: Make comment on Jira issue
-        run: echo ${{ needs.create-issue.outputs.issueId }} "${{ matrix.label }}"
+        run: echo ${{ needs.create-issue.outputs.id }} "${{ matrix.label }}"
 
