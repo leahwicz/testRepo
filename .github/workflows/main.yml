@@ -26,5 +26,7 @@ jobs:
     - name: Script
       run: |
         labels="${{ github.event.issue.labels.*.name }}"
+        labels+="redshift"
+        echo "$labels"
 
     
