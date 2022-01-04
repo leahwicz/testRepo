@@ -35,25 +35,4 @@ jobs:
       - say_hello
     steps:
       - name: Echo previous outputs
-        run: echo "${{ toJSON(needs.say_hello.outputs) }}"
-  my_matrix:
-    runs-on: ubuntu-latest
-    needs:
-      - my_echo
-      - say_hello
-    strategy:
-      matrix:
-        service: ${{ fromJSON(needs.say_hello.outputs.services) }}
-    steps:
-      - name: Matrix => (${{ matrix.service }} ${{ matrix.version}})
-        run: |
-          echo ${{ matrix.service }}
-    
-      - name: Script
-        run: |
-          echo "${{ github.event.issue.assignee.login }}"
-          labels="${{ github.event.issue.labels.*.name }}"
-          labels+="redshift"
-          echo "$labels"
-
-    
+        run: echo '${{ { "labels": toJSON(needs.say_hello.outputs) , "customfield_10045": "github.event.issue.html_url", "customfield_10046": github.event.issue.number } }}'
