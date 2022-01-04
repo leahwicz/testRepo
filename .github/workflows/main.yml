@@ -25,5 +25,5 @@ jobs:
     steps: 
     - name: Script
       run: |
-        echo ${{ github.event.issue.labels.*.name }}
+        echo ${{ fromJSON(github.event.issue.labels) }}
     
