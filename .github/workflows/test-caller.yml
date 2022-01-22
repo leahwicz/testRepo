@@ -6,4 +6,4 @@ on:
 
 jobs:
   job1:
-    uses: ./.github/workflows/main.yml@master
+    uses: ./.github/workflows/basic.yml@master
