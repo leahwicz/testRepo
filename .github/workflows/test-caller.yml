@@ -6,4 +6,4 @@ on:
 
 jobs:
   job1:
-    uses: ./.github/workflows/basic.yml@master
+    uses: leahwicz/testRepo/.github/workflows/basic.yml@master
