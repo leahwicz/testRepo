@@ -22,8 +22,10 @@ jobs:
         run: |
           echo $GITHUB_EVENT_NAME
           if [[ $GITHUB_EVENT_NAME == "workflow_dispatch" ]]; then
+            echo "Workflow dispatch event detected"
             echo "::set-output name=release_id::${{github.event.inputs.release_id}}"
           else
+            echo "release event detected"
             echo "::set-output name=release_id::${{github.event.release.release_id}}"
           fi
           
