@@ -26,7 +26,7 @@ jobs:
             echo "::set-output name=release_id::${{github.event.inputs.release_id}}"
           else
             echo "release event detected"
-            echo "::set-output name=release_id::${{github.event.release.id}}"
+            echo "::set-output name=release_id::${{github.event.release.tag_name}}"
           fi
           
       - name: Print var
