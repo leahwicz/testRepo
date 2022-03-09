@@ -18,7 +18,7 @@ jobs:
     
     steps:
       - name: Set release id
-        id: releaseId
+        id: setId
         run: |
           echo $GITHUB_EVENT_NAME
           if [[ $GITHUB_EVENT_NAME == "workflow_dispatch" ]]; then
@@ -33,6 +33,6 @@ jobs:
         run: |
           echo ${{github.event.inputs.release_id}}
           echo ${{github.event.release.release_id}}
-          echo $env.release_id
+          echo ${{ steps.setId.outputs.docker_tag }}
           echo $release_id
           echo ${{env.release_id}}
