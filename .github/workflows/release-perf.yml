@@ -14,7 +14,23 @@ permissions: read-all
 jobs:
   step:
     runs-on: ubuntu-latest
+    
+    
     steps:
+      - name: Set release id
+        id: releaseId
+        run: |
+          echo ${{github.event.action}}
+          if [[ "${{github.event.action}}" == "release" ]]; then
+            echo "::set-output name=gcloud_project::my-project-dev"
+            echo "::set-output name=phase::staging"
+          fi
+
+          if [[ "${{github.base_ref}}" == "production" || "${{github.ref}}" == "refs/heads/production" ]]; then
+            echo "::set-output name=gcloud_project::my-project-prd"
+            echo "::set-output name=phase::production"
+          fi
+          
       - name: Print var
         run: |
           echo ${{github.event.inputs.release_id}}
