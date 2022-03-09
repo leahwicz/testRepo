@@ -2,7 +2,7 @@ name: Tests perf
 
 on:
   release:
-    - published
+    - released
   workflow_dispatch:
     inputs:
       release_id:
