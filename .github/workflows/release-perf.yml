@@ -1,0 +1,22 @@
+name: Tests perf
+
+on:
+  release:
+    - published
+  workflow_dispatch:
+    inputs:
+      release_id:
+       description: release version
+       required: true
+
+permissions: read-all
+
+jobs:
+  step:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print var
+        run: |
+          echo ${{github.event.inputs.release_id}}
+          echo ${{github.event.release.release_id}}
+          echo ${{github.event.*.release_id}}
