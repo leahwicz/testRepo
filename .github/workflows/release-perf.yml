@@ -1,8 +1,6 @@
 name: Tests perf
 
 on:
-  release:
-    - released
   workflow_dispatch:
     inputs:
       release_id:
