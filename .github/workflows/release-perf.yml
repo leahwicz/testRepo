@@ -35,4 +35,4 @@ jobs:
         run: |
           echo ${{github.event.inputs.release_id}}
           echo ${{github.event.release.release_id}}
-          echo ${{env.GITHUB_EVENT_NAME}}
+          echo $GITHUB_EVENT_NAME
