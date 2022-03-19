@@ -24,16 +24,14 @@ jobs:
       # Runs a set of commands using the runners shell
  
       - name: Update Issue Title
+        env:
+          title: "${{github.event.issue.title}}"
         run: |
-          title="${{github.event.issue.title}}"
-          REPO=$title
-          DB_NAME="${REPO//-/_}"
+          DB_NAME="${title//-/_}"
           echo $DB_NAME
-          title2="\"test comment\""
-          echo $title2
           curl --request PATCH \
           --url https://api.github.com/repos/${{ github.repository }}/issues/9 \
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --header 'Accept: application/vnd.github.v3+json' \
-          --data '{ "title": "'"$DB_NAME"'" }'
+          --data '{ "title": "'"$title"'" }'
