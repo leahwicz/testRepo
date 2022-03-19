@@ -22,7 +22,7 @@ jobs:
  
       - name: Update Issue Title
         run: |
-          REPO=${{ steps.create.outputs.issue }}
+          REPO="${{ steps.create.outputs.issue }}"
           DB_NAME="${REPO//"/\"}"
           echo $DB_NAME
           title2="\"test comment\""
