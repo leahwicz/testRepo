@@ -25,8 +25,7 @@ jobs:
  
       - name: Update Issue Title
         run: |
-          REPO="${{ github.event.issue.title }}"
-          DB_NAME="${REPO//"/\"}"
+          DB_NAME="${github.event.issue.title//"/\"}"
           echo $DB_NAME
           title2="\"test comment\""
           echo $title2
@@ -35,4 +34,4 @@ jobs:
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --header 'Accept: application/vnd.github.v3+json' \
-          --data '{ "title": "'$title2'" }'
+          --data '{ "title": "'"$title2"'" }'
