@@ -34,4 +34,4 @@ jobs:
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --header 'Accept: application/vnd.github.v3+json' \
-          --data '{ "title": "'"$DB_NAME"'" }'
+          --data '{ "title": "[this] '"$DB_NAME"'" }'
