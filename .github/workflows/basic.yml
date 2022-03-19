@@ -25,7 +25,7 @@ jobs:
  
       - name: Update Issue Title
         run: |
-          DB_NAME="${github.event.issue.title//"/\"}"
+          DB_NAME="${{github.event.issue.title//"/\"}}"
           echo $DB_NAME
           title2="\"test comment\""
           echo $title2
