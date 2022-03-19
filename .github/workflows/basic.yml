@@ -22,6 +22,9 @@ jobs:
  
       - name: Update Issue Title
         run: |
+          REPO=${{ steps.create.outputs.issue }}
+          DB_NAME="${REPO//"/\"}"
+          echo $DB_NAME
           title2="\"test comment\""
           echo $title2
           curl --request PATCH \
