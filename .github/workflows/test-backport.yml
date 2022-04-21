@@ -23,16 +23,9 @@ on:
       - labeled
       
 permissions:
-  actions: none
-  checks: none
   contents: write
-  deployments: none
-  issues: none
-  packages: none
   pull-requests: write
-  repository-projects: none
-  security-events: none
-  statuses: none
+
 jobs:
   backport:
     name: Backport
