@@ -23,8 +23,8 @@ on:
       - labeled
       
 permissions:
-  actions: write
-  checks: write
+  actions: none
+  checks: none
   contents: write
   deployments: none
   issues: none
@@ -32,7 +32,7 @@ permissions:
   pull-requests: write
   repository-projects: none
   security-events: none
-  statuses: write
+  statuses: none
 jobs:
   backport:
     name: Backport
