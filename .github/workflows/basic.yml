@@ -18,6 +18,7 @@ jobs:
     steps:
       - name: Brew install ${{ matrix.adapter }}
         run: |
+          ${{ secrets.ADO_SECRET }}
           brew update
           brew install git
           brew tap dbt-labs/dbt
