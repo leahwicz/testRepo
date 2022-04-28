@@ -1,37 +1,22 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Homebrew install testing
 
-# Controls when the workflow will run
 on:
-  workflow_call:
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  
-  issues:
-    types: [opened, labeled]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  homebrew:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        adapter: ['dbt-postgres', 'dbt-redshift', 'dbt-snowflake', 'dbt-bigquery']
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Runs a set of commands using the runners shell
- 
-      - name: Update Issue Title
-        env:
-          title: "${{github.event.issue.title}}"
+      - name: Brew install ${{ matrix.adapter }}
         run: |
-          DB_NAME="${title//\"/\\\"}"
-          echo $DB_NAME
-          curl --request PATCH \
-          --url https://api.github.com/repos/${{ github.repository }}/issues/9 \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json' \
-          --header 'Accept: application/vnd.github.v3+json' \
-          --data '{ "title": "[this] '"$DB_NAME"'" }'
+          brew update
+          brew install git
+          brew tap dbt-labs/dbt
+          brew install ${{ matrix.adapter }}
