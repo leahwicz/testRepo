@@ -20,3 +20,4 @@ jobs:
           brew install git
           brew tap dbt-labs/dbt
           brew install ${{ matrix.adapter }}
+          dbt --version
