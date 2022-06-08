@@ -7,11 +7,6 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-    - name: cli
-      env:
-        github-token: ${{ secrets.PAT_TOKEN }}
-      run: |
-        gh workflow run main.yml --ref testBranch
     - uses: actions/github-script@v6
       id: api-call
       with:
