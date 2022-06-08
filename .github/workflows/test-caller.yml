@@ -12,13 +12,18 @@ jobs:
       with:
         github-token: ${{ secrets.PAT_TOKEN }}
         script: |
-          return await github.rest.actions.createWorkflowDispatch({
-            owner: 'leahwicz',
-            repo: 'testRepo',
-            workflow_id: 'main.yml',
-            ref: 'testBranch'
-          })
-        result-encoding: string
+          try {
+            const result = await github.rest.actions.createWorkflowDispatch({
+              owner: 'leahwicz',
+              repo: 'testRepo',
+              workflow_id: 'main.yml',
+              ref: 'testBranch'
+            })
+            console.log(result);
+          } catch(error) {
+            console.error(error);
+            core.setFailed(error);
+          }
     - name: Print
       run: |
         echo "${{steps.api-call.outputs.result}}"
