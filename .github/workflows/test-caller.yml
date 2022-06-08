@@ -13,7 +13,7 @@ jobs:
         github-token: ${{ secrets.PAT_TOKEN }}
         script: |
           try {
-            const result = github.rest.actions.createWorkflowDispatch({
+            const result = await github.rest.actions.createWorkflowDispatch({
               owner: 'leahwicz',
               repo: 'testRepo',
               workflow_id: 'main.yml',
