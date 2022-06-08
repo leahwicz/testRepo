@@ -7,6 +7,10 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+    - name: cli
+      run: |
+        const result = gh workflow run main.yml --ref testBranch
+        console.log(result)
     - uses: actions/github-script@v6
       id: api-call
       with:
