@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/github-script@v6
+      id: api-call
       with:
         github-token: ${{ secrets.PAT_TOKEN }}
         script: |
@@ -17,6 +18,7 @@ jobs:
             workflow_id: 'main.yml',
             ref: 'testBranch'
           })
+        result-encoding: string
     - name: Print
       run: |
-        echo You did it!
+        echo "${{steps.api-call.outputs.result}}"
