@@ -25,3 +25,4 @@ jobs:
       - name: Print
         run: |
           echo running on branch ${GITHUB_REF##*/}
+          exit 1
