@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: cli
+      env:
+        github-token: ${{ secrets.PAT_TOKEN }}
       run: |
         const result = gh workflow run main.yml --ref testBranch
         console.log(result)
