@@ -6,6 +6,9 @@ on:
 jobs:
   dispatch:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch: [main, testBranch]
     steps:
     - name: Repository Dispatch
       uses: peter-evans/repository-dispatch@v1
@@ -13,7 +16,4 @@ jobs:
         repository: 'leahwicz/testRepo'
         token: ${{ secrets.PAT_TOKEN }}
         event-type: 'scheduled-release-branch'
-        client-payload: '{"ref": "testBranch"}'
-    - name: Print
-      run: |
-        echo "${{steps.api-call.outputs.result}}"
+        client-payload: '{"ref": "${{branch}}"}'
