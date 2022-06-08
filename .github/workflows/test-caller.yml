@@ -16,4 +16,4 @@ jobs:
         repository: 'leahwicz/testRepo'
         token: ${{ secrets.PAT_TOKEN }}
         event-type: 'scheduled-release-branch'
-        client-payload: '{"ref": "${{branch}}"}'
+        client-payload: '{"ref": "${{ matrix.branch }}"}'
