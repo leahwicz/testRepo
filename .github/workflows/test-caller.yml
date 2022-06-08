@@ -11,7 +11,7 @@ jobs:
       env:
         github-token: ${{ secrets.PAT_TOKEN }}
       run: |
-        const result = gh workflow run main.yml --ref testBranch
+        result = gh workflow run main.yml --ref testBranch
         console.log(result)
     - uses: actions/github-script@v6
       id: api-call
