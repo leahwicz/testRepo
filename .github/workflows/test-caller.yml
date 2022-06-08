@@ -26,6 +26,6 @@ jobs:
         echo "Another Workflow conclusion: ${{ steps.trigger-step.outputs.workflow-conclusion }}"
       
     - name: Another step that can handle the result
-      if: always() && ${{ steps.trigger-step.outputs.workflow-conclusion != 'success' }}
+      if: ${{ always() && !contains(steps.trigger-step.outputs.workflow-conclusion,'success') }}
       run: |
         echo "Another Workflow conclusion: ${{ steps.trigger-step.outputs.workflow-conclusion }}"
