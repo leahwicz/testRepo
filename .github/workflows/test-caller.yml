@@ -7,6 +7,12 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        repository: 'leahwicz/testRepo'
+        token: ${{ secrets.PAT_TOKEN }}
+        event-type: 'scheduled-release-branch'
     - uses: actions/github-script@v6
       id: api-call
       with:
