@@ -13,23 +13,7 @@ jobs:
         repository: 'leahwicz/testRepo'
         token: ${{ secrets.PAT_TOKEN }}
         event-type: 'scheduled-release-branch'
-    - uses: actions/github-script@v6
-      id: api-call
-      with:
-        github-token: ${{ secrets.PAT_TOKEN }}
-        script: |
-          try {
-            const result = await github.rest.actions.createWorkflowDispatch({
-              owner: 'leahwicz',
-              repo: 'testRepo',
-              workflow_id: 'main.yml',
-              ref: 'testBranch'
-            })
-            console.log(result);
-          } catch(error) {
-            console.error(error);
-            core.setFailed(error);
-          }
+        client-payload: '{"ref": "testBranch"}'
     - name: Print
       run: |
         echo "${{steps.api-call.outputs.result}}"
