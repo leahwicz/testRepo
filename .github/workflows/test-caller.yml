@@ -10,10 +10,16 @@ jobs:
       matrix:
         branch: [master, testBranch]
     steps:
-    - name: Repository Dispatch
-      uses: peter-evans/repository-dispatch@v1
+    
+    - name: Invoke workflow and handle result
+      id: trigger-step
+      uses: aurelien-baudet/workflow-dispatch@v2.1.1
       with:
-        repository: 'leahwicz/testRepo'
+        workflow: main.yml
+        ref: ${{ matrix.branch }}
         token: ${{ secrets.PAT_TOKEN }}
-        event-type: 'scheduled-release-branch'
-        client-payload: '{"ref": "${{ matrix.branch }}"}'
+      
+    - name: Another step that can handle the result
+      if: always()
+      run: |
+        echo "Another Workflow conclusion: ${{ steps.trigger-step.outputs.workflow-conclusion }}"
