@@ -32,18 +32,7 @@ env:
   CLOSE_ISSUE_REASON: "not_planned"
 
 jobs:
-  stale-awaiting-response:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/stale@v6
-        with:
-          stale-issue-message: ${{ env.STALE_ISSUE_MSG }}
-          stale-pr-message: ${{ env.STALE_PR_MSG }}
-          close-issue-message: ${{ env.CLOSE_ISSUE_MSG }}
-          close-pr-message: ${{ env.CLOSE_PR_MSG }}
-          close-issue-reason: ${{ env.CLOSE_ISSUE_REASON }}
-          days-before-stale: 90
-          any-of-labels: 'awaiting_response', 'more_information_needed'
+
 
   stale-first-issue:
     runs-on: ubuntu-latest
