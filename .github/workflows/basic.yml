@@ -11,6 +11,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
       - name: Setup homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
@@ -28,6 +31,4 @@ jobs:
            
       - name: Add resources
         run: |
-          cd
-          ls
           brew update-python-resources dbt-redshift-1.5.1.rb --package-name dbt-redshift-1.5.1
