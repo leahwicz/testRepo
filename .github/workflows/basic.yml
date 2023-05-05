@@ -25,11 +25,7 @@ jobs:
           brew update
           brew cleanup
           brew doctor
-          
-      - name: Create formula
-        run: |
-          brew create --set-name dbt-redshift-1.5.1 https://github.com/dbt-labs/dbt-redshift/releases/download/v1.5.1/dbt-redshift-1.5.1.tar.gz
-          
+           
       - name: Add resources
         run: |
-          brew update-python-resources /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/dbt-redshift-1.5.1.rb --package-name dbt-redshift-1.5.1
+          brew update-python-resources dbt-redshift-1.5.1.rb --package-name dbt-redshift-1.5.1
