@@ -22,13 +22,16 @@ jobs:
         with:
           python-version: "3.10"
           
-      - name: Update homebrew
+      - name: Update homebrew and cleanup
         run: |
           brew update
           brew update
           brew cleanup
+          
+      - name: Brew doctor
+        run: |
           brew doctor
            
-      - name: Add resources
+      - name: Add resources to formula
         run: |
-          brew update-python-resources dbt-redshift-1.5.1.rb --package-name dbt-redshift
+          brew update-python-resources dbt-redshift-1.5.1.rb -d --package-name dbt-redshift
