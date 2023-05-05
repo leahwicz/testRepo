@@ -1,40 +1,34 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Homebrew install testing
+name: Homebrew test
 
 on:
   workflow_dispatch:
   
-permissions: {}
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   homebrew:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        adapter: ['dbt-postgres', 'dbt-redshift', 'dbt-snowflake', 'dbt-bigquery']
+    runs-on: macos-latest
 
     steps:
-      - name: Brew install ${{ matrix.adapter }}
+      - name: Setup homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          
+      - name: Update homebrew
         run: |
           brew update
-          brew install git
-          brew tap dbt-labs/dbt
-          brew install ${{ matrix.adapter }}
-          dbt --version
+          brew update
+          brew doctor
           
-  post-failure:
-    runs-on: ubuntu-latest
-    needs: homebrew
-    if: ${{ failure() }}
-
-    steps:
-      - name: Posting scheduled run failures
-        uses: ravsamhq/notify-slack-action@v1
-        if: ${{ github.event_name == 'schedule' }}
-        with:
-          notification_title: 'Homebrew nightly integration test failed'
-          status: ${{ job.status }}
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEV_CORE_ALERTS }}
+      - name: Create formula
+        run: |
+          brew create --set-name dbt-redshift-1.5.1 https://github.com/dbt-labs/dbt-redshift/releases/download/v1.5.1/dbt-redshift-1.5.1.tar.gz
+          
+      - name: Add resources
+        run: |
+          brew update-python-resources /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/dbt-redshift-1.5.1.rb --package-name dbt-redshift-1.5.1
