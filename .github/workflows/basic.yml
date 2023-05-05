@@ -23,6 +23,7 @@ jobs:
         run: |
           brew update
           brew update
+          brew cleanup
           brew doctor
           
       - name: Create formula
